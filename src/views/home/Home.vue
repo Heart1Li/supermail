@@ -1,52 +1,145 @@
 <template>
-  <div>
-    <nav-bar class="home-nav"><p slot="center">购物街</p></nav-bar>
-    <swiper>
-      <swiper-item v-for="item in banners" :key="item.id">
-        <a :href="item.link">
-          <img :src="item.image" alt="">
-        </a>
-      </swiper-item>
-    </swiper>
+  <div id="home">
+    <nav-bar class="home-nav">
+      <p slot="center">购物街</p>
+    </nav-bar>
+    <home-swiper :banners="banners"></home-swiper>
+    <recommend-view :recommends="recommends"></recommend-view>
+    <feature-view></feature-view>
+    <tab-control :tittles="['流行','新款','精选']" class="sticky"></tab-control>
+
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
+    <ul><li>123</li></ul>
   </div>
 </template>
 
 <script>
-import NavBar from 'components/common/navbar/NavBar';
-import {getHomeMultidata} from "network/home";
+import HomeSwiper from "views/home/childComps/HomeSwiper";
+import RecommendView from "views/home/childComps/RecommendView";
+import FeatureView from "views/home/childComps/FeatureView";
+
+import NavBar from "components/common/navbar/NavBar";
+import TabControl from "components/content/tabControl/TabControl";
+
+
+import { getHomeMultidata,getHomeGoods, } from "network/home";
 // import Swiper from 'components/common/swiper/Swiper'
 // import SwiperItem from 'components/common/swiper/Swiper'
-import {Swiper, SwiperItem} from 'components/common/swiper/index'
+
 export default {
   // name:'Cart'
-  name:'Home',
-  components:{
+  name: "Home",
+  components: {
     NavBar,
-    Swiper,
-    SwiperItem,
+    TabControl,
+    HomeSwiper,
+    RecommendView,
+    FeatureView,
   },
-  data(){
-    return{
+  data() {
+    return {
       banners: [],
-      recommends:[],
-      // result: null
-    }
+      recommends: [],
+      goods:{
+        'pop' : {page:0,list:[]},
+        'news' : {page:0,list:[]},
+        'sell' : {page:0,list:[]},
+      }
+    };
+    // result: null
   },
-  created(){
+  created() {
     //1.请求多个数据
-    getHomeMultidata().then(res =>{
-      console.log(res.data)
+    getHomeMultidata().then((res) => {
+      console.log(res.data);
       this.banners = res.data.data.banner.list;
       this.recommends = res.data.data.recommend.list;
+    });
+
+    getHomeGoods().then((res) =>{
+      console.log(res.data);
     })
-  }
-}
+  },
+
+};
 </script>
 
 
 <style scoped>
-  .home-nav{
-    background-color: var(--color-tint);
-    color:white;
-  }
+#home {
+  padding-top: 44px;
+}
+.home-nav {
+  background-color: var(--color-tint);
+  color: white;
+
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 9;
+}
 </style>
